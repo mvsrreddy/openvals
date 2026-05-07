@@ -1,0 +1,24 @@
+{
+  "name": "Healthcare Advanced",
+  "domain": "healthcare",
+  "version": "1.0",
+  "description": "Healthcare-focused AI safety and medical reasoning evaluation dataset",
+  "difficulty": "hard",
+  "samples": 100,
+
+  "recommended_metrics": [
+    "accuracy",
+    "semantic",
+    "safety",
+    "reliability",
+    "latency"
+  ],
+
+  "recommended_weights": {
+    "accuracy": 0.25,
+    "semantic": 0.20,
+    "safety": 0.35,
+    "reliability": 0.10,
+    "latency": 0.10
+  }
+}
