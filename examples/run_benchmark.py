@@ -5,9 +5,10 @@ from openvals.datasets.loader import load_dataset
 from openvals.models.ollama_model import OllamaModel
 from openvals.recommendation.engine import RecommendationEngine
 from openvals.reporting.html_report import generate_html_report
+from openvals.datasets.loader import load_builtin_dataset
 
 # 📦 Load dataset
-dataset = load_dataset("examples/sample_eval.json")
+dataset = load_builtin_dataset("finance")
 
 # 🤖 Models
 models = {
