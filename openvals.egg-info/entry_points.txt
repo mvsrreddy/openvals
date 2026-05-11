@@ -1,2 +1,2 @@
 [console_scripts]
-openvals = openvals.cli:main
+openvals = openvals.cli.app:main

@@ -4,10 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openvals"
-version = "0.1.0"
-description = "Open source AI evaluation, validation, benchmarking, security recommendation Engine and trust layer for LLMs (OpenAI, Claude, Ollama, Gemini)" 
+version = "0.1.5"
+
+description = "Open source AI evaluation, validation, benchmarking, recommendation engine and trust layer for LLMs"
+
 readme = "README.md"
+
 requires-python = ">=3.8"
+
 license = { text = "MIT" }
 
 authors = [
@@ -32,19 +36,21 @@ keywords = [
 ]
 
 classifiers = [
-    "Programming Language :: Python :: 3",
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
-    "Topic :: Software Development :: Testing :: AI Testing :: AI Development :: AI Quality",
     "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent"
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Testing"
 ]
 
 dependencies = [
     "numpy>=1.21",
     "pandas>=1.3",
-    "scikit-learn>=1.0"
+    "scikit-learn>=1.0",
+    "typer>=0.12.0",
+    "rich>=13.0"
 ]
 
 [project.urls]
@@ -53,9 +59,11 @@ Documentation = "https://docs.openvalidations.com"
 Source = "https://github.com/vishwanathakuthota/openvals"
 
 [project.scripts]
-openvals = "openvals.cli:main"
+openvals = "openvals.cli.app:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["openvals*"]
 
+[tool.setuptools.package-data]
+openvals = ["datasets/**/*.json"]

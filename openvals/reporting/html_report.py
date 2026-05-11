@@ -116,5 +116,3 @@ def generate_html_report(results, recommendation, output_file="report.html"):
     # 💾 Save file
     with open(output_file, "w") as f:
         f.write(html)
-
-    print(f"\n✅ Report generated: {output_file}")
