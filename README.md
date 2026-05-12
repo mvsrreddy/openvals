@@ -264,7 +264,7 @@ openvals/
 
 ---
 ## 🧠 Philosophy & Vision
-> “If you can’t measure it, you can’t trust it.”
+    > “If you can’t measure it, you can’t trust it.”
 
 **OpenVals** is building the trust layer for AI systems.
 
