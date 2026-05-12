@@ -2,7 +2,7 @@
 
 OpenVals is an the evaluation + trust infrastructure for LLMs, SLMs, local AI, private AI, and public AI designed to help organizations measure, compare, and trust AI models before deployment.
 
-    > Evaluate. Benchmark. Trust. Deploy with Confidence.
+    > Evaluate. Benchmark. Trust. Deploy AI/ML with Confidence.
 
 ![Python](https://img.shields.io/pypi/pyversions/openvals)
 ![Repo Size](https://img.shields.io/github/repo-size/vishwanathakuthota/openvals)
@@ -42,6 +42,22 @@ OpenVals answers:
 
 ---
 ## Core Capabilities
+### 0. Decision Reliability Score (DRS)
+
+OpenVals introduces DRS (Decision Reliability Score) — a production-oriented scoring framework designed to evaluate whether an AI model can be trusted in real-world deployment environments.
+
+Unlike traditional benchmarks that focus only on accuracy, DRS evaluates:
+
+- Accuracy
+- Semantic similarity
+- Reliability
+- Safety
+- Consistency
+- Variance
+- Latency
+
+DRS helps organizations move beyond leaderboard-style benchmarking toward deployment-ready AI validation.
+
 ### 1. Model Evaluation
 Evaluate model outputs against structured datasets using:
 
@@ -81,10 +97,17 @@ Trust Score = Σ (wᵢ × mᵢ)
 ---
 ## Installation
 
-    pip install openvals 
-
+```bash
+pip install openvals
+```
 ---
 # ⚡ Quick Start
+
+### CLI Benchmarking
+
+```bash
+openvals benchmark --dataset finance --models mistral,llama3 --config finance --output finance_report.html
+```
 
 ### 1. Run Evaluation
 ```python
@@ -141,7 +164,7 @@ print(results)
 * ⏱️ Latency-aware ranking
 * 🔐 Reliability + safety scoring
 * 📈 Normalized comparison engine
-* 🎯 Recommendation engine (next phase)
+* 🎯 AI-powered recommendation engine
 
 ## Built For
 
@@ -166,6 +189,8 @@ This project uses the following key performance indicators to evaluate system ou
 | **Latency** | Response speed |
 | **Reliability** | Stability of output |
 | **Safety** | Risk/unsafe content detection |
+| **Consistency** | Stability across repeated evaluations |
+| **Variance** | Output fluctuation measurement |
 
 ### Usage
 These metrics are applied during the evaluation phase to ensure consistent and high-quality results across all modules.
@@ -192,6 +217,8 @@ print(result)
 openvals/
 │
 ├── core/              # Evaluation engine
+├── cli/               # Typer CLI
+├── config/            # Config presets & loaders
 ├── models/            # Model adapters
 ├── datasets/          # Dataset loading & schema
 ├── metrics/           # Evaluation metrics
@@ -204,24 +231,36 @@ openvals/
 
 ---
 ## 🚀 Roadmap
-### v0.1 (Current)
-* Core evaluator
-* Benchmarking engine
-* Ollama integration
 
-### v0.2
-* Advanced normalization
-* Dataset expansion tools
-* Better semantic scoring
+### v0.1.5 (Current)
+- Core evaluator
+- Multi-model benchmarking
+- DRS scoring
+- Recommendation engine
+- HTML reporting
+- Configurable benchmarking profiles
+- Ollama integration
+- CLI workflows
 
-### v0.3
-* Recommendation engine
-* Explainability layer (WHY model is best)
+### v0.2.0
+- Advanced normalization
+- Dataset expansion tools
+- Better semantic scoring
+- Reliability scoring redesign
+- Safety scoring redesign
 
-### v1.0
-* SaaS API layer
-* Dashboard
-* Enterprise model governance
+### v0.3.0
+- Explainability layer (SHAP/LIME)
+- REST APIs
+- Evaluation history
+- External dataset integrations
+
+### v1.0.0
+- SaaS platform
+- Enterprise governance
+- Continuous AI validation
+- AI trust infrastructure
+- Team workspaces & dashboards
 
 ---
 ## 🧠 Philosophy & Vision
@@ -234,26 +273,7 @@ openvals/
 Our mission is to build the essential trust layer for AI systems, ensuring they remain transparent, reliable, and safe **for a better future of humanity**.
 
 ---
-## 🚀 Roadmap
-### v0.1 (Current)
-* Core evaluator
-* Benchmarking engine
-* Ollama integration
 
-### v0.2
-* Advanced normalization
-* Dataset expansion tools
-* Better semantic scoring
-
-### v0.3
-* Recommendation engine
-* Explainability layer (WHY model is best)
-
-### v1.0
-* SaaS API layer
-* Dashboard
-* Enterprise model governance
-Use code with caution.
 Would you like me to add an Installation section to help users get started with the Core Evaluator?
 
 ---

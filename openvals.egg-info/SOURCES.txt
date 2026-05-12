@@ -15,6 +15,13 @@ openvals/benchmarking/normalization.py
 openvals/benchmarking/ranking.py
 openvals/cli/__init__.py
 openvals/cli/app.py
+openvals/config/__init__.py
+openvals/config/defaults.py
+openvals/config/loader.py
+openvals/config/presets/developer.yaml
+openvals/config/presets/finance.yaml
+openvals/config/presets/healthcare.yaml
+openvals/config/presets/legal.yaml
 openvals/core/__init__.py
 openvals/core/evaluator.py
 openvals/datasets/__init__.py

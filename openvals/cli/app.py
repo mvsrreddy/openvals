@@ -1,9 +1,10 @@
+from openvals.datasets import metadata
 import typer
-
+from openvals.datasets.metadata import load_dataset_metadata
 from openvals.datasets.loader import load_builtin_dataset
 from openvals.datasets.metadata import load_dataset_metadata
 from openvals.datasets.registry import DATASETS
-
+from openvals.config.loader import load_config
 from openvals.models.ollama_model import OllamaModel
 
 from openvals.benchmarking.benchmark import BenchmarkRunner
@@ -16,17 +17,48 @@ from openvals.reporting.html_report import generate_html_report
 app = typer.Typer(
     help="OpenVals - AI Evaluation & Benchmarking Framework"
 )
+# =========================================================
+# Version Command
+# =========================================================
+@app.command()
+def version():
+    """
+    Show OpenVals version.
+    """
 
-
+    typer.echo("OpenVals v0.1.5 built by DrPinnacle (https://drpinnacle.com) Vishwanath Akuthota")
 # =========================================================
 # BENCHMARK COMMAND
 # =========================================================
 
 @app.command("benchmark")
 def benchmark(
-    dataset: str = typer.Option(..., help="Dataset name"),
-    models: str = typer.Option(..., help="Comma-separated model names"),
-    report: bool = typer.Option(True, help="Generate HTML report")
+
+    dataset: str = typer.Option(
+        ...,
+        help="Dataset name"
+    ),
+
+    config: str = typer.Option(
+        None,
+        help="Config preset"
+    ),
+
+    models: str = typer.Option(
+        ...,
+        help="Comma-separated model names"
+    ),
+
+    report: bool = typer.Option(
+        True,
+        help="Generate HTML report"
+    ),
+
+    output: str = typer.Option(
+        "report.html",
+        help="Output HTML report file"
+    )
+
 ):
     """
     Run OpenVals benchmark.
@@ -43,8 +75,13 @@ def benchmark(
 
     metadata = load_dataset_metadata(dataset)
 
-    weights = metadata["recommended_weights"]
+    if config:
+        cfg = load_config(config)
+        weights = cfg["weights"]
 
+        typer.echo(f"⚙️ Config Loaded : {config}")
+    else:
+        weights = metadata["recommended_weights"]
 
     typer.echo("📦 Dataset Loaded")
     typer.echo(f"Dataset : {metadata['name']}")
@@ -185,10 +222,10 @@ def benchmark(
         generate_html_report(
             results,
             recommendation,
-            output_file="report.html"
+            output_file=output
         )
 
-        typer.echo("\n✅ HTML report generated: report.html")
+        typer.echo(f"\n✅ HTML report generated: {output}")
 
 
 # =========================================================
