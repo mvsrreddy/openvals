@@ -100,6 +100,27 @@ Trust Score = Σ (wᵢ × mᵢ)
 - Tradeoff-aware ranking (speed vs accuracy vs safety)
 - Use-case based model selection (coming next version)
 
+### 6. Semantic Intelligence Engine
+
+OpenVals now includes embedding-powered semantic evaluation using sentence-transformers.
+
+This enables:
+
+- Meaning-aware evaluation
+- Contextual similarity scoring
+- Better benchmarking realism
+- Reduced keyword-based bias
+- More accurate production validation
+
+Current embedding model:
+- `all-MiniLM-L6-v2`
+
+Future roadmap includes:
+- OpenAI embeddings
+- BGE embeddings
+- InstructorXL
+- Enterprise/private embedding systems
+
 ---
 ## Installation
 
@@ -176,7 +197,7 @@ print(results)
 
 ## Built For
 
-* AI engineers
+* AI engineering teams
 * ML teams
 * SaaS companies using LLMs
 * Enterprises validating models
@@ -253,7 +274,7 @@ openvals/
 ### v0.2.0(in progress)
 - Advanced normalization
 - Dataset expansion tools
-- Better semantic scoring
+- Embedding-powered semantic scoring
 - Reliability scoring redesign
 - Safety scoring redesign
 
