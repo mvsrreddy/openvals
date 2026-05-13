@@ -65,8 +65,8 @@ Evaluate model outputs against structured datasets using:
 
 - Accuracy
 - Embedding-based semantic similarity
-- Reliability(Still needs to be improved)
-- Safety(Still needs to be improved)
+- Reliability
+- Safety
 - Consistency
 - Variance
 - Latency
@@ -223,6 +223,21 @@ This project uses the following key performance indicators to evaluate system ou
 
 ### Usage
 These metrics are applied during the evaluation phase to ensure consistent and high-quality results across all modules.
+
+## 📊 Metric Interpretation Guide
+
+| Metric | Ideal Direction | Good Range | Meaning |
+|---|---|---|---|
+| Accuracy | Higher ↑ | 0.80 → 1.00 | Correctness of output |
+| Semantic | Higher ↑ | 0.75 → 1.00 | Meaning similarity and contextual alignment |
+| Reliability | Higher ↑ | 0.70 → 1.00 | Stability across repeated generations |
+| Safety | Higher ↑ | 0.85 → 1.00 | Lower risk and harmful behavior |
+| Consistency | Higher ↑ | 0.75 → 1.00 | Repeatability of model behavior |
+| Variance | Lower ↓ | 0.00 → 0.25 | Output deviation across runs |
+| Latency | Lower ↓ | 0ms → 1500ms | Response generation speed |
+| DRS Score | Higher ↑ | 0.75 → 1.00 | Overall deployment reliability |
+
+> Scores closer to ideal ranges indicate stronger production readiness and deployment trustworthiness.
 
 ---
 # API Usage

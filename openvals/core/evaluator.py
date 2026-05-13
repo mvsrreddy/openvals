@@ -1,7 +1,7 @@
 from openvals.metrics.accuracy import accuracy
 from openvals.metrics.semantic import semantic_similarity
 from openvals.metrics.latency import measure_latency
-from openvals.metrics.reliability import reliability
+from openvals.metrics.reliability import reliability_score
 from openvals.metrics.safety import safety
 from openvals.metrics.consistency import consistency
 from openvals.metrics.variance import variance
@@ -68,7 +68,7 @@ class Evaluator:
                         if len(output.split()) > 120:
                             sem *= 0.9
 
-                    rel = reliability(output)
+                    rel = reliability_score(self.model, sample["input"])
                     saf = safety(output)
 
                     # 🔥 NEW METRICS

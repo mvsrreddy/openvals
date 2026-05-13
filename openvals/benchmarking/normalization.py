@@ -1,37 +1,144 @@
+import math
+
+
+METRICS = [
+
+    "accuracy",
+    "semantic",
+    "latency",
+    "reliability",
+    "safety",
+    "consistency",
+    "variance"
+
+]
+
+
+def clip(value, min_value=0.0, max_value=1.0):
+
+    return max(min(value, max_value), min_value)
+
+
 def normalize_scores(results):
-    metrics = ["accuracy", "semantic", "latency"]
 
-    # collect values
-    values = {m: [] for m in metrics}
+    values = {
+        metric: []
+        for metric in METRICS
+    }
 
-    for model in results:
-        for m in metrics:
-            values[m].append(results[model]["metrics"][m])
 
-    # min-max per metric
-    min_vals = {m: min(values[m]) for m in metrics}
-    max_vals = {m: max(values[m]) for m in metrics}
+    # =====================================================
+    # COLLECT METRICS
+    # =====================================================
+
+    for model_name in results:
+
+        metrics = results[model_name]["metrics"]
+
+        for metric in METRICS:
+
+            values[metric].append(
+                metrics.get(metric, 0.0)
+            )
+
+
+    # =====================================================
+    # COMPUTE STATS
+    # =====================================================
+
+    min_vals = {
+        metric: min(values[metric])
+        for metric in METRICS
+    }
+
+    max_vals = {
+        metric: max(values[metric])
+        for metric in METRICS
+    }
+
 
     normalized = {}
 
-    for model in results:
-        normalized[model] = {}
 
-        for m in metrics:
-            val = results[model]["metrics"][m]
-            min_v = min_vals[m]
-            max_v = max_vals[m]
+    # =====================================================
+    # NORMALIZE
+    # =====================================================
+
+    for model_name in results:
+
+        normalized[model_name] = {}
+
+        metrics = results[model_name]["metrics"]
+
+
+        for metric in METRICS:
+
+            value = metrics.get(metric, 0.0)
+
+            min_v = min_vals[metric]
+            max_v = max_vals[metric]
+
+
+            # ==============================================
+            # HANDLE IDENTICAL VALUES
+            # ==============================================
 
             if max_v == min_v:
-                norm = 1.0  # all equal
-            else:
-                if m == "latency":
-                    # 🔥 INVERTED NORMALIZATION
-                    norm = (max_v - val) / (max_v - min_v)
-                else:
-                    # normal case (higher is better)
-                    norm = (val - min_v) / (max_v - min_v)
 
-            normalized[model][m] = norm
+                norm = 1.0
+
+
+            else:
+
+                # ==========================================
+                # LATENCY NORMALIZATION
+                # ==========================================
+
+                if metric == "latency":
+
+                    value = math.log(value + 1)
+
+                    min_log = math.log(min_v + 1)
+                    max_log = math.log(max_v + 1)
+
+                    norm = (
+                        (max_log - value)
+                        /
+                        (max_log - min_log)
+                    )
+
+
+                # ==========================================
+                # VARIANCE NORMALIZATION
+                # LOWER VARIANCE IS BETTER
+                # ==========================================
+
+                elif metric == "variance":
+
+                    norm = (
+                        (max_v - value)
+                        /
+                        (max_v - min_v)
+                    )
+
+
+                # ==========================================
+                # NORMAL METRICS
+                # ==========================================
+
+                else:
+
+                    norm = (
+                        (value - min_v)
+                        /
+                        (max_v - min_v)
+                    )
+
+
+            normalized[model_name][metric] = round(
+                clip(norm),
+                4
+            )
+
 
     return normalized
