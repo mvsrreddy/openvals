@@ -49,7 +49,7 @@ OpenVals introduces DRS (Decision Reliability Score) — a production-oriented s
 Unlike traditional benchmarks that focus only on accuracy, DRS evaluates:
 
 - Accuracy
-- Semantic similarity
+- Embedding-based semantic + accuracy hybrid scoring
 - Reliability
 - Safety
 - Consistency
@@ -58,11 +58,17 @@ Unlike traditional benchmarks that focus only on accuracy, DRS evaluates:
 
 DRS helps organizations move beyond leaderboard-style benchmarking toward deployment-ready AI validation.
 
+DRS combines traditional evaluation metrics with embedding-powered semantic intelligence to better reflect real-world AI performance and deployment reliability.
+
 ### 1. Model Evaluation
 Evaluate model outputs against structured datasets using:
 
 - Accuracy
-- Semantic similarity
+- Embedding-based semantic similarity
+- Reliability(Still needs to be improved)
+- Safety(Still needs to be improved)
+- Consistency
+- Variance
 - Latency
 
 ### 2. Multi-Model Benchmarking
@@ -147,7 +153,6 @@ results = runner.run()
 
 print(results)
 ```
-
 ---
 ## 📊 Example Output
 ```code
@@ -158,9 +163,12 @@ print(results)
 ```
 ## Key Features
 
+## Key Features
+
 * ⚡ Multi-model benchmarking (Ollama + APIs)
 * 📊 Multi-metric evaluation system
-* 🧠 Semantic + accuracy hybrid scoring
+* 🧠 Embedding-based semantic + accuracy hybrid scoring
+* 📐 Sentence-transformer powered semantic evaluation
 * ⏱️ Latency-aware ranking
 * 🔐 Reliability + safety scoring
 * 📈 Normalized comparison engine
@@ -185,7 +193,7 @@ This project uses the following key performance indicators to evaluate system ou
 | Metric | Meaning |
 | :--- | :--- |
 | **Accuracy** | Exact / relaxed match scoring |
-| **Semantic** | Meaning similarity |
+| **Semantic** | Embedding-powered meaning similarity |
 | **Latency** | Response speed |
 | **Reliability** | Stability of output |
 | **Safety** | Risk/unsafe content detection |
@@ -242,7 +250,7 @@ openvals/
 - Ollama integration
 - CLI workflows
 
-### v0.2.0
+### v0.2.0(in progress)
 - Advanced normalization
 - Dataset expansion tools
 - Better semantic scoring
