@@ -546,6 +546,35 @@ tbody tr:last-child td { border-bottom: none; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
+/* --- Capabilities --- */
+.capabilities-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 24px;
+}
+.capability-item {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: 8px;
+    transition: border-color 0.2s;
+}
+.capability-item:hover {
+    border-color: var(--accent);
+}
+.capability-item h3 {
+    font-size: 1rem;
+    margin-top: 0 !important;
+    margin-bottom: 8px;
+    color: var(--text);
+}
+.capability-item p {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+    color: var(--text-secondary);
+}
+
 /* --- Audience & Mission --- */
 .audience-grid {
     display: grid;
@@ -614,6 +643,33 @@ tbody tr:last-child td { border-bottom: none; }
 }
 .vision-quote::before { left: -32px; top: -16px; }
 .vision-quote::after { right: -32px; bottom: -40px; }
+
+/* --- Backed By --- */
+.backed-grid {
+    display: flex;
+    gap: 40px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+.backed-item {
+    color: var(--text-secondary);
+}
+.backed-item strong {
+    font-size: 1.1rem;
+    color: var(--text);
+}
+.backed-item .small {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* --- Final Thought --- */
+.final-thought {
+    text-align: center;
+    padding: 60px 0;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+}
 
 /* --- Utility --- */
 .mt-0 { margin-top: 0 !important; }
