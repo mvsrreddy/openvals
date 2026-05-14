@@ -148,6 +148,38 @@ for name, score in ranking:
                 <pre><code class="language-bash">openvals benchmark --dataset examples/sample_eval.json</code></pre>
             </div>
 
+            <h2 id="ollama-local">Local Models with Ollama</h2>
+            <p>Evaluate a model running locally via Ollama.</p>
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">python</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <pre><code class="language-python">from openvals.models.ollama_model import OllamaModel
+from openvals.core.evaluator import Evaluator
+
+model = OllamaModel(model_name="llama3")
+evaluator = Evaluator(model, dataset)
+print(evaluator.run())</code></pre>
+            </div>
+
+            <h2 id="recommendation-example">Model Recommendation</h2>
+            <p>Get a weighted recommendation based on benchmark results.</p>
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">python</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <pre><code class="language-python">from openvals.recommendation.engine import RecommendationEngine
+
+# Assuming 'results' is from BenchmarkRunner.run()
+engine = RecommendationEngine(results)
+rec = engine.recommend(use_case="customer_support")
+
+print(f"Recommended Model: {rec['recommended_model']}")
+print(f"Confidence: {rec['confidence']:.2f}")</code></pre>
+            </div>
+
             <footer class="page-footer">
                 <p>&copy; 2026 OpenVals Project</p>
                 <a href="#" class="edit-link">Edit this page on GitHub</a>

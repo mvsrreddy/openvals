@@ -64,6 +64,7 @@
                     <a href="api/scoring.html">Scoring</a>
                     <a href="api/recommendation.html">Recommendation</a>
                     <a href="api/reporting.html">Reporting</a>
+                    <a href="api/safety.html">Safety</a>
                 </div>
             </div>
             <div class="sidebar-section">
@@ -71,6 +72,7 @@
                 <div class="sidebar-links">
                     <a href="guides/custom-model.html">Custom Models</a>
                     <a href="guides/custom-metrics.html">Custom Metrics</a>
+                    <a href="guides/configuration.html">Configuration</a>
                     <a href="guides/cli.html">CLI Usage</a>
                 </div>
             </div>
@@ -94,6 +96,21 @@
 
             <h1>Core Concepts</h1>
             <p class="subtitle">Understand the underlying architecture and methodology of OpenVals.</p>
+
+            <h2 id="project-structure">Project Structure</h2>
+            <div class="code-block-wrapper">
+                <pre><code>openvals/
+├── core/           # Evaluation engine
+├── cli/            # Typer-based CLI
+├── config/         # YAML presets & loaders
+├── models/         # Model adapters (Ollama, Dummy)
+├── datasets/       # Built-in registry & loaders
+├── metrics/        # Multi-metric evaluation logic
+├── benchmarking/   # Normalization & comparison layer
+├── scoring/        # Weighted & DRS scoring
+├── safety/         # Risk detection engine
+└── reporting/      # HTML report generation</code></pre>
+            </div>
 
             <h2 id="architecture">Architecture</h2>
             <p>OpenVals is built with modularity at its core. The framework separates the data, the model, the
@@ -137,8 +154,9 @@
                 <li><strong>Safety (10%):</strong> Detection of unsafe or harmful content.</li>
             </ul>
 
-            <h2 id="drs">Dynamic Response Scoring (DRS)</h2>
-            <p>DRS is a secondary scoring layer that evaluates the "naturalness" and "fluidity" of a model's response. Unlike standard metrics that look for a specific answer, DRS looks at the statistical properties of the text generation itself.</p>
+            <h2 id="drs">Decision Reliability Score (DRS)</h2>
+            <p>OpenVals introduces <strong>DRS</strong> — a production-oriented scoring framework designed to evaluate whether an AI model can be trusted in real-world deployment environments.</p>
+            <p>Unlike traditional benchmarks that focus only on accuracy, DRS combines traditional evaluation metrics with embedding-powered semantic intelligence to better reflect real-world performance.</p>
 
             <h2 id="recommendation-engine">Recommendation Engine</h2>
             <p>The <strong>Recommendation Engine</strong> uses the results from multi-model benchmarks to suggest the best model for your specific needs. It doesn't just look at the highest score; it performs a tradeoff analysis:</p>

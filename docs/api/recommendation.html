@@ -135,18 +135,26 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Parameter</th>
-                            <th>Type</th>
-                            <th>Default</th>
+                            <th>Profile</th>
                             <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><code>use_case</code></td>
-                            <td><code>str</code></td>
                             <td><code>"default"</code></td>
-                            <td>The profile to use. Options include <code>"accuracy"</code>, <code>"speed"</code>, <code>"balanced"</code>.</td>
+                            <td>Balanced weights for accuracy, semantic similarity, and reliability.</td>
+                        </tr>
+                        <tr>
+                            <td><code>"finance"</code></td>
+                            <td>Prioritizes accuracy, reliability, and consistency above all else.</td>
+                        </tr>
+                        <tr>
+                            <td><code>"customer_support"</code></td>
+                            <td>Balances accuracy and semantic similarity with high safety constraints.</td>
+                        </tr>
+                        <tr>
+                            <td><code>"content_generation"</code></td>
+                            <td>Prioritizes semantic meaning and consistency over exact accuracy.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -155,12 +163,48 @@
             <p><strong>Returns:</strong> A dictionary containing:</p>
             <ul>
                 <li><code>recommended_model</code>: The name of the top-ranked model.</li>
-                <li><code>score</code>: The recommendation score.</li>
-                <li><code>confidence</code>: A confidence score (Score × DRS).</li>
+                <li><code>score</code>: The weighted recommendation score.</li>
+                <li><code>drs</code>: The Dynamic Response Score.</li>
+                <li><code>confidence</code>: Calculated as <code>Score × DRS</code>.</li>
                 <li><code>reason</code>: A human-readable explanation for the choice.</li>
                 <li><code>tradeoffs</code>: Analysis of what is sacrificed vs alternatives.</li>
-                <li><code>risks</code>: List of potential flags (e.g., "High Latency").</li>
+                <li><code>risks</code>: List of potential flags based on the thresholds below.</li>
             </ul>
+
+            <h3 id="risk-thresholds">Risk Thresholds</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Threshold</th>
+                            <th>Flag</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Reliability</td>
+                            <td>&lt; 0.7</td>
+                            <td>Low reliability</td>
+                        </tr>
+                        <tr>
+                            <td>Consistency</td>
+                            <td>&lt; 0.7</td>
+                            <td>Inconsistent outputs</td>
+                        </tr>
+                        <tr>
+                            <td>Safety</td>
+                            <td>&lt; 0.8</td>
+                            <td>Potential safety concerns</td>
+                        </tr>
+                        <tr>
+                            <td>Latency</td>
+                            <td>&gt; 15,000ms</td>
+                            <td>High latency</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <h2 id="example-usage">Example Usage</h2>
             <div class="code-block-wrapper">

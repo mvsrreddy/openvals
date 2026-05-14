@@ -64,6 +64,7 @@
                     <a href="scoring.html">Scoring</a>
                     <a href="recommendation.html">Recommendation</a>
                     <a href="reporting.html">Reporting</a>
+                    <a href="safety.html">Safety</a>
                 </div>
             </div>
             <div class="sidebar-section">
@@ -71,6 +72,7 @@
                 <div class="sidebar-links">
                     <a href="../guides/custom-model.html">Custom Models</a>
                     <a href="../guides/custom-metrics.html">Custom Metrics</a>
+                    <a href="../guides/configuration.html">Configuration</a>
                     <a href="../guides/cli.html">CLI Usage</a>
                 </div>
             </div>
@@ -104,14 +106,44 @@ score = accuracy("Hello world", "Hello world") # 1.0
 score = accuracy("Hello world", "Hi world")    # 0.0</code></pre>
             </div>
 
-            <h2 id="semantic"><code>semantic_similarity(a, b)</code></h2>
-            <p>Uses <code>scikit-learn</code>'s <code>CountVectorizer</code> and <code>cosine_similarity</code> to
-                calculate the meaning-based similarity between two strings.</p>
+            <h2 id="reliability"><code>reliability_score(model, prompt)</code></h2>
+            <p>Measures the stability of a model's output. It executes the same prompt <strong>3 times</strong> and calculates the average semantic similarity between all resulting pairs.</p>
             <div class="code-block-wrapper">
-                <pre><code class="language-python">from openvals.metrics.semantic import semantic_similarity
+                <pre><code class="language-python">from openvals.metrics.reliability import reliability_score
 
-# High score even if not identical
-score = semantic_similarity("The sky is blue", "Blue is the color of the sky")</code></pre>
+score = reliability_score(model, "What is the capital of France?")</code></pre>
+            </div>
+
+            <h2 id="consistency"><code>consistency(model, prompt)</code></h2>
+            <p>Measures the exact-match stability of outputs. It executes the prompt <strong>3 times</strong> and returns <code>1.0 / count(unique_outputs)</code>.</p>
+            <div class="code-block-wrapper">
+                <pre><code class="language-python">from openvals.metrics.consistency import consistency
+
+score = consistency(model, "Yes or No?") # 1.0 if all responses same</code></pre>
+            </div>
+
+            <h2 id="semantic"><code>semantic_score(a, b)</code></h2>
+            <p>Calculates the meaning-based similarity between two strings using the <strong><code>all-MiniLM-L6-v2</code></strong> sentence transformer model.</p>
+            <div class="code-block-wrapper">
+                <pre><code class="language-python">from openvals.metrics.semantic import semantic_score
+
+score = semantic_score("The car is fast", "The vehicle is quick")</code></pre>
+            </div>
+
+            <h2 id="embeddings"><code>embedding_distance(a, b)</code></h2>
+            <p>Calculates the vector distance between two strings using pre-trained embeddings (requires <code>sentence-transformers</code>).</p>
+            <div class="code-block-wrapper">
+                <pre><code class="language-python">from openvals.metrics.embeddings import embedding_distance
+
+score = embedding_distance("AI is future", "Artificial Intelligence is the next step")</code></pre>
+            </div>
+
+            <h2 id="similarity"><code>fuzzy_similarity(a, b)</code></h2>
+            <p>Calculates a fuzzy matching score between two strings using Levenshtein distance.</p>
+            <div class="code-block-wrapper">
+                <pre><code class="language-python">from openvals.metrics.similarity import fuzzy_similarity
+
+score = fuzzy_similarity("OpenVals", "Open Vals") # 0.9</code></pre>
             </div>
 
             <h2 id="latency"><code>measure_latency(func, *args, **kwargs)</code></h2>
@@ -136,6 +168,73 @@ result, seconds = measure_latency(my_model.generate, "What is AI?")</code></pre>
 
             <h2 id="verbosity"><code>verbosity(output)</code></h2>
             <p>Analyzes the length and word density of the output relative to the task type.</p>
+
+            <h2 id="format"><code>format_compliance(output, expected)</code></h2>
+            <p>Checks if the output follows the expected length constraints based on the length of the expected output.</p>
+            <div class="code-block-wrapper">
+                <pre><code class="language-python">from openvals.metrics.format import format_compliance
+
+score = format_compliance("Short answer.", "Short answer.") # 1.0</code></pre>
+            </div>
+
+            <h2 id="interpretation">Metric Interpretation Guide</h2>
+            <p>Use this guide to understand the scores and their production readiness.</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Ideal Direction</th>
+                            <th>Good Range</th>
+                            <th>Meaning</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Accuracy</strong></td>
+                            <td>Higher ↑</td>
+                            <td>0.80 → 1.00</td>
+                            <td>Correctness of output</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Semantic</strong></td>
+                            <td>Higher ↑</td>
+                            <td>0.75 → 1.00</td>
+                            <td>Meaning similarity and contextual alignment</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reliability</strong></td>
+                            <td>Higher ↑</td>
+                            <td>0.70 → 1.00</td>
+                            <td>Stability across repeated generations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Safety</strong></td>
+                            <td>Higher ↑</td>
+                            <td>0.85 → 1.00</td>
+                            <td>Lower risk and harmful behavior</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Consistency</strong></td>
+                            <td>Higher ↑</td>
+                            <td>0.75 → 1.00</td>
+                            <td>Repeatability of model behavior</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Variance</strong></td>
+                            <td>Lower ↓</td>
+                            <td>0.00 → 0.25</td>
+                            <td>Output deviation across runs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Latency</strong></td>
+                            <td>Lower ↓</td>
+                            <td>0ms → 1500ms</td>
+                            <td>Response generation speed</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <h2 id="custom-metrics">Custom Metrics</h2>
             <p>Learn how to define your own metrics in the <a href="../guides/custom-metrics.html" class="link">Custom

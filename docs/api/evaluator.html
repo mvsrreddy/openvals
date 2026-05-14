@@ -148,6 +148,17 @@
                 </table>
             </div>
 
+            <h2 id="task-logic">Task-Specific Logic</h2>
+            <p>The <code>Evaluator</code> applies different logic based on the <code>type</code> key found in your dataset samples:</p>
+            <ul>
+                <li><strong>classification</strong>: The <code>semantic_similarity</code> score is forced to match the <code>accuracy</code> score.</li>
+                <li><strong>generation</strong>: If the output exceeds 120 words, a 10% penalty is applied to the <code>semantic_similarity</code> score.</li>
+                <li><strong>default</strong>: Standard evaluation logic applies.</li>
+            </ul>
+
+            <h3>Semantic Thresholds</h3>
+            <p>You can define a <code>semantic_threshold</code> in the <code>evaluation</code> dictionary of a sample. If the semantic score meets or exceeds this threshold, it is automatically rounded up to <code>1.0</code>.</p>
+
             <h2 id="methods">Methods</h2>
 
             <h3><code>run()</code></h3>

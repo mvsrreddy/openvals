@@ -115,6 +115,7 @@ cd openvals
 pip install -e .</code></pre>
             </div>
             <p>Dependencies like <code>numpy</code>, <code>pandas</code>, and <code>scikit-learn</code> will be installed automatically.</p>
+            <p><strong>Note:</strong> High-precision semantic scoring requires the <code>sentence-transformers</code> package, which will download the <code>all-MiniLM-L6-v2</code> model (approx. 80MB) on first use.</p>
 
             <h2 id="your-first-dataset">Your First Dataset</h2>
             <p>OpenVals expects evaluation data in a simple JSON format. Create a file named <code>my_eval.json</code>:

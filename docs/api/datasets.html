@@ -64,6 +64,7 @@
                     <a href="scoring.html">Scoring</a>
                     <a href="recommendation.html">Recommendation</a>
                     <a href="reporting.html">Reporting</a>
+                    <a href="safety.html">Safety</a>
                 </div>
             </div>
             <div class="sidebar-section">
@@ -71,6 +72,7 @@
                 <div class="sidebar-links">
                     <a href="../guides/custom-model.html">Custom Models</a>
                     <a href="../guides/custom-metrics.html">Custom Metrics</a>
+                    <a href="../guides/configuration.html">Configuration</a>
                     <a href="../guides/cli.html">CLI Usage</a>
                 </div>
             </div>
@@ -95,12 +97,26 @@
             <h1>Datasets</h1>
             <p class="subtitle">Utilities for loading and managing evaluation datasets.</p>
 
+            <h2 id="builtin-datasets">Built-in Datasets</h2>
+            <p>OpenVals includes several curated datasets for different industry domains. You can list them using the CLI:</p>
+            <div class="code-block-wrapper">
+                <pre><code class="language-bash">openvals datasets</code></pre>
+            </div>
+
+            <h3 id="load-builtin"><code>load_builtin_dataset(name)</code></h3>
+            <p>Loads a built-in dataset by its registered name.</p>
+            <div class="code-block-wrapper">
+                <pre><code class="language-python">from openvals.datasets.loader import load_builtin_dataset
+
+dataset = load_builtin_dataset("finance")</code></pre>
+            </div>
+
             <h2 id="load-dataset"><code>load_dataset(path)</code></h2>
-            <p>Loads a JSON dataset from the specified file path. The JSON should be an array of objects.</p>
+            <p>Loads a JSON dataset from a local file path.</p>
             <div class="code-block-wrapper">
                 <pre><code class="language-python">from openvals.datasets.loader import load_dataset
 
-dataset = load_dataset("path/to/eval.json")</code></pre>
+dataset = load_dataset("my_data.json")</code></pre>
             </div>
 
             <h3>Expected Format</h3>
@@ -125,6 +141,26 @@ dataset = load_dataset("path/to/eval.json")</code></pre>
     {"input": "Hi", "expected_output": "Hello"},
     {"input": "2+2", "expected_output": "4"}
 ]</code></pre>
+            </div>
+
+            <h2 id="metadata-schema">Metadata Schema</h2>
+            <p>Each built-in dataset includes a <code>dataset.json</code> file that defines its metadata and recommended evaluation settings.</p>
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">json</span>
+                </div>
+                <pre><code>{
+  "name": "Finance Advanced",
+  "domain": "finance",
+  "version": "1.0",
+  "description": "Financial reasoning evaluation",
+  "recommended_metrics": ["accuracy", "safety", "reliability"],
+  "recommended_weights": {
+    "accuracy": 0.4,
+    "safety": 0.4,
+    "reliability": 0.2
+  }
+}</code></pre>
             </div>
 
             <footer class="page-footer">

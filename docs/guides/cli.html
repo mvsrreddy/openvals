@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLI Usage Guide — OpenVals</title>
+    <title>CLI Usage — OpenVals</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -41,8 +41,6 @@
         </div>
     </header>
 
-    <div class="sidebar-overlay"></div>
-
     <aside class="sidebar">
         <nav>
             <div class="sidebar-section">
@@ -64,6 +62,7 @@
                     <a href="../api/scoring.html">Scoring</a>
                     <a href="../api/recommendation.html">Recommendation</a>
                     <a href="../api/reporting.html">Reporting</a>
+                    <a href="../api/safety.html">Safety</a>
                 </div>
             </div>
             <div class="sidebar-section">
@@ -71,6 +70,7 @@
                 <div class="sidebar-links">
                     <a href="custom-model.html">Custom Models</a>
                     <a href="custom-metrics.html">Custom Metrics</a>
+                    <a href="configuration.html">Configuration</a>
                     <a href="cli.html" class="active">CLI Usage</a>
                 </div>
             </div>
@@ -93,40 +93,79 @@
             </nav>
 
             <h1>CLI Usage</h1>
-            <p class="subtitle">Run evaluations and benchmarks directly from your terminal.</p>
+            <p class="subtitle">Command-line interface for rapid model benchmarking and evaluation.</p>
 
             <h2 id="commands">Commands</h2>
-            <p>OpenVals provides a single command-line entry point: <code>openvals</code>. Use subcommands to specify
-                the action.</p>
 
-            <h3><code>openvals run</code></h3>
-            <p>Runs a single model evaluation against a dataset.</p>
+            <h3><code>version</code></h3>
+            <p>Displays the current version and build information.</p>
             <div class="code-block-wrapper">
-                <pre><code class="language-bash">openvals run --dataset path/to/eval.json</code></pre>
+                <pre><code class="language-bash">openvals version</code></pre>
             </div>
-            <p><strong>Arguments:</strong></p>
-            <ul>
-                <li><code>--dataset</code> (Required): Path to the JSON dataset file.</li>
-            </ul>
 
-            <h3><code>openvals benchmark</code></h3>
-            <p>Runs a multi-model benchmark against a dataset.</p>
+            <h3><code>datasets</code></h3>
+            <p>Lists all built-in datasets available for benchmarking.</p>
             <div class="code-block-wrapper">
-                <pre><code class="language-bash">openvals benchmark --dataset path/to/eval.json</code></pre>
+                <pre><code class="language-bash">openvals datasets</code></pre>
             </div>
-            <p><strong>Arguments:</strong></p>
-            <ul>
-                <li><code>--dataset</code> (Required): Path to the JSON dataset file.</li>
-            </ul>
 
-            <h2 id="output-format">Output Format</h2>
-            <p>The CLI outputs results in a structured JSON-like format to the console, providing:</p>
-            <ul>
-                <li><strong>Overall Score:</strong> The weighted average of all metrics.</li>
-                <li><strong>Metric Averages:</strong> Accuracy, Semantic Similarity, and Latency.</li>
-                <li><strong>Sample Breakdown:</strong> Input, Output, Expected, and individual scores for each sample.
-                </li>
-            </ul>
+            <h3><code>benchmark</code></h3>
+            <p>The primary command for running side-by-side model comparisons.</p>
+            <div class="code-block-wrapper">
+                <pre><code class="language-bash">openvals benchmark [OPTIONS]</code></pre>
+            </div>
+
+            <h4>Options</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>Description</th>
+                            <th>Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>--dataset</code></td>
+                            <td>Name of the built-in dataset to use (e.g., <code>finance</code>).</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td><code>--models</code></td>
+                            <td>Comma-separated list of Ollama model names.</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td><code>--config</code></td>
+                            <td>Name of a configuration preset (e.g., <code>healthcare</code>).</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td><code>--output</code></td>
+                            <td>Filename for the HTML report (default: <code>report.html</code>).</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td><code>--report / --no-report</code></td>
+                            <td>Whether to generate an HTML report (default: <code>--report</code>).</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 id="examples">Examples</h2>
+
+            <p><strong>Compare two local models on the finance dataset:</strong></p>
+            <div class="code-block-wrapper">
+                <pre><code class="language-bash">openvals benchmark --dataset finance --models llama3,mistral</code></pre>
+            </div>
+
+            <p><strong>Run a code evaluation with specialized weights:</strong></p>
+            <div class="code-block-wrapper">
+                <pre><code class="language-bash">openvals benchmark --dataset dev --models codellama --config developer</code></pre>
+            </div>
 
             <footer class="page-footer">
                 <p>&copy; 2026 OpenVals Project</p>

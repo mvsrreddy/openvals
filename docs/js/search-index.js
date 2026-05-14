@@ -2,7 +2,7 @@ const SEARCH_INDEX = [
   {
     title: "Introduction",
     url: "index.html",
-    content: "OpenVals is the evaluation + trust infrastructure for LLMs, SLMs, and private AI. Measure, compare, and trust your models before deployment. Core capabilities include model evaluation, multi-model benchmarking, recommendation engine, and HTML reporting.",
+    content: "OpenVals is the evaluation + trust infrastructure for LLMs, SLMs, and private AI. Measure, compare, and trust your models before deployment. Core capabilities include model evaluation, multi-model benchmarking, recommendation engine, safety detection, and HTML reporting.",
     tags: ["home", "intro", "overview", "trust", "infrastructure"]
   },
   {
@@ -14,8 +14,8 @@ const SEARCH_INDEX = [
   {
     title: "Core Concepts",
     url: "core-concepts.html",
-    content: "Understand the architecture of OpenVals. Evaluation pipeline, metrics, scoring, and benchmarking flow. How trust scores are calculated using weighted metrics. Introduction to Dynamic Response Scoring (DRS) and the Recommendation Engine.",
-    tags: ["architecture", "trust score", "pipeline", "concepts", "drs", "recommendation"]
+    content: "Understand the architecture of OpenVals. Evaluation pipeline, metrics, scoring, and benchmarking flow. How trust scores are calculated using weighted metrics. Introduction to Dynamic Response Scoring (DRS), Safety Engine, and the Recommendation Engine.",
+    tags: ["architecture", "trust score", "pipeline", "concepts", "drs", "recommendation", "safety"]
   },
   {
     title: "Evaluator API",
@@ -32,14 +32,14 @@ const SEARCH_INDEX = [
   {
     title: "Datasets API",
     url: "api/datasets.html",
-    content: "Learn how to use the load_dataset function to load JSON evaluation data into your evaluation pipeline.",
-    tags: ["api", "datasets", "loader", "json"]
+    content: "Learn how to use built-in datasets or load your own JSON evaluation data. Access the dataset registry and use the datasets CLI command.",
+    tags: ["api", "datasets", "loader", "json", "registry"]
   },
   {
     title: "Metrics API",
     url: "api/metrics.html",
-    content: "Detailed reference for accuracy, semantic_similarity, latency, reliability, safety, consistency, variance, and verbosity metrics.",
-    tags: ["api", "metrics", "accuracy", "semantic", "latency", "safety", "reliability"]
+    content: "Detailed reference for accuracy, semantic_similarity, latency, reliability, safety, consistency, embeddings, and similarity metrics.",
+    tags: ["api", "metrics", "accuracy", "semantic", "latency", "safety", "embeddings"]
   },
   {
     title: "Benchmarking API",
@@ -56,7 +56,7 @@ const SEARCH_INDEX = [
   {
     title: "Recommendation API",
     url: "api/recommendation.html",
-    content: "Reference for RecommendationEngine. Analyze benchmark results to suggest the best model based on use-case profiles (accuracy, speed, balanced).",
+    content: "Reference for RecommendationEngine. Analyze benchmark results to suggest the best model based on industry-specific profiles (finance, healthcare, developer).",
     tags: ["api", "recommendation", "engine", "profiles", "tradeoffs"]
   },
   {
@@ -66,10 +66,22 @@ const SEARCH_INDEX = [
     tags: ["api", "reporting", "html", "leaderboard", "report"]
   },
   {
+    title: "Safety API",
+    url: "api/safety.html",
+    content: "Documentation for the Safety Engine. Detect jailbreaks, toxicity, and unsafe content patterns natively in your outputs.",
+    tags: ["api", "safety", "jailbreak", "toxicity", "risk"]
+  },
+  {
     title: "CLI Guide",
     url: "guides/cli.html",
-    content: "Command-line interface usage. Commands like openvals run and openvals benchmark. Parameters for dataset paths and configuration.",
-    tags: ["guide", "cli", "terminal", "commands"]
+    content: "Command-line interface usage. New Typer-based commands like benchmark, datasets, and version. Rapidly compare local Ollama models.",
+    tags: ["guide", "cli", "terminal", "commands", "typer"]
+  },
+  {
+    title: "Configuration Guide",
+    url: "guides/configuration.html",
+    content: "Learn how to use YAML presets (finance, legal, healthcare) and custom weights to configure your evaluations.",
+    tags: ["guide", "config", "yaml", "presets", "weights"]
   },
   {
     title: "Custom Models Guide",
@@ -95,6 +107,7 @@ const SEARCH_INDEX = [
     content: "Future development plans for OpenVals. Upcoming features like advanced normalization, dataset expansion, and enterprise governance.",
     tags: ["roadmap", "future", "version", "vision"]
   }
+];
 ];
 
 function search(query) {

@@ -96,7 +96,7 @@
             <p class="subtitle">Classes and utilities for side-by-side model comparison.</p>
 
             <h2 id="benchmarkrunner"><code>BenchmarkRunner</code></h2>
-            <p>Manages the execution of multiple models against a single dataset.</p>
+            <p>Manages the execution of multiple models against a single dataset. It includes built-in safety checks to ensure that a single model failure (e.g., API crash) does not stop the entire benchmarking process.</p>
             <div class="code-block-wrapper">
                 <pre><code class="language-python">from openvals.benchmarking.benchmark import BenchmarkRunner
 
@@ -104,10 +104,15 @@ models = {"gpt-4": model_a, "claude-3": model_b}
 runner = BenchmarkRunner(models, dataset)
 results = runner.run()</code></pre>
             </div>
+            <p><strong>Error Handling:</strong> If a model fails during execution, <code>BenchmarkRunner</code> returns an "empty result" dictionary (all scores 0.0) for that specific model and continues with the next.</p>
 
-            <h2 id="normalization">Normalization</h2>
-            <p>Converts metric values into a 0.0 to 1.0 range based on the minimum and maximum values found across all
-                models in the benchmark.</p>
+            <h2 id="normalization">Normalization Logic</h2>
+            <p>OpenVals uses advanced normalization techniques to ensure fair comparisons:</p>
+            <ul>
+                <li><strong>Logarithmic Normalization</strong>: Applied to <code>latency</code>. Since latency can have extreme outliers, logarithmic scaling prevents a single slow response from distorting the entire benchmark.</li>
+                <li><strong>Inverted Normalization</strong>: Applied to <code>latency</code> and <code>variance</code>. Lower values are mapped to higher scores (1.0 is best).</li>
+                <li><strong>Min-Max Scaling</strong>: Standard metrics are scaled from 0.0 to 1.0 based on the range of values in the current benchmark.</li>
+            </ul>
             <div class="code-block-wrapper">
                 <pre><code class="language-python">from openvals.benchmarking.normalization import normalize_scores
 
@@ -121,6 +126,14 @@ normalized = normalize_scores(results)</code></pre>
 
 weights = {"accuracy": 0.5, "semantic": 0.3, "latency": 0.2}
 ranking = rank_models(normalized, weights)</code></pre>
+            </div>
+
+            <h2 id="comparator">Comparator</h2>
+            <p>A simple utility to extract and structure benchmark results for quick review.</p>
+            <div class="code-block-wrapper">
+                <pre><code class="language-python">from openvals.benchmarking.comparator import compare
+
+summary = compare(results)</code></pre>
             </div>
 
             <footer class="page-footer">
