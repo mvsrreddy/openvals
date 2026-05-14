@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started — OpenVals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <a href="index.html" class="header-logo">
+            <img src="assets/logo.svg" alt="OpenVals Logo">
+            <span>OpenVals</span>
+        </a>
+        <div class="header-actions">
+            <button class="header-search-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <span>Search docs...</span>
+                <kbd>/</kbd>
+            </button>
+            <a href="https://github.com/vishwanathakuthota/openvals" class="github-link" target="_blank">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
+                </svg>
+            </a>
+            <button class="theme-toggle" aria-label="Toggle theme"></button>
+            <button class="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="sidebar-overlay"></div>
+
+    <aside class="sidebar">
+        <nav>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Introduction <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="index.html">Overview</a>
+                    <a href="getting-started.html" class="active">Getting Started</a>
+                    <a href="core-concepts.html">Core Concepts</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">API Reference <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="api/evaluator.html">Evaluator</a>
+                    <a href="api/models.html">Models</a>
+                    <a href="api/datasets.html">Datasets</a>
+                    <a href="api/metrics.html">Metrics</a>
+                    <a href="api/benchmarking.html">Benchmarking</a>
+                    <a href="api/scoring.html">Scoring</a>
+                    <a href="api/recommendation.html">Recommendation</a>
+                    <a href="api/reporting.html">Reporting</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Guides <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="guides/custom-model.html">Custom Models</a>
+                    <a href="guides/custom-metrics.html">Custom Metrics</a>
+                    <a href="guides/cli.html">CLI Usage</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Resources <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="examples.html">Examples</a>
+                    <a href="roadmap.html">Roadmap</a>
+                </div>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <div class="content">
+            <nav class="breadcrumbs">
+                <a href="index.html">Introduction</a>
+                <span class="sep">/</span>
+                <span>Getting Started</span>
+            </nav>
+
+            <h1>Getting Started</h1>
+            <p class="subtitle">Set up OpenVals and run your first AI model evaluation in minutes.</p>
+
+            <h2 id="installation">Installation</h2>
+            <p>OpenVals is available on PyPI. You can install it using pip:</p>
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">bash</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <pre><code>pip install openvals</code></pre>
+            </div>
+            <p>For development or the latest features, you can install from source:</p>
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">bash</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <pre><code>git clone https://github.com/vishwanathakuthota/openvals.git
+cd openvals
+pip install -e .</code></pre>
+            </div>
+            <p>Dependencies like <code>numpy</code>, <code>pandas</code>, and <code>scikit-learn</code> will be installed automatically.</p>
+
+            <h2 id="your-first-dataset">Your First Dataset</h2>
+            <p>OpenVals expects evaluation data in a simple JSON format. Create a file named <code>my_eval.json</code>:
+            </p>
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">json</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <pre><code>[
+  {
+    "id": "1",
+    "input": "What is 2+2?",
+    "expected_output": "4"
+  },
+  {
+    "id": "2",
+    "input": "Translate 'Hello' to Spanish",
+    "expected_output": "Hola"
+  }
+]</code></pre>
+            </div>
+
+            <h2 id="running-via-cli">Running via CLI</h2>
+            <p>The quickest way to run an evaluation is using the built-in CLI command:</p>
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">bash</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <pre><code>openvals run --dataset my_eval.json</code></pre>
+            </div>
+            <p>This will use the <code>DummyModel</code> (which reverses input) to demonstrate the evaluation flow.
+                You'll see an output containing the overall trust score and metric averages.</p>
+
+            <h2 id="running-via-python">Running via Python</h2>
+            <p>For deeper integration, use the Python API. This allows you to use your own model adapters.</p>
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">python</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <pre><code class="language-python">from openvals.core.evaluator import Evaluator
+from openvals.models.dummy_model import DummyModel
+from openvals.datasets.loader import load_dataset
+
+# 1. Load data
+dataset = load_dataset("my_eval.json")
+
+# 2. Setup model
+model = DummyModel()
+
+# 3. Initialize Evaluator
+evaluator = Evaluator(model, dataset)
+
+# 4. Run and see results
+results = evaluator.run()
+print(results)</code></pre>
+            </div>
+
+            <h2 id="local-models-ollama">Local Models with Ollama</h2>
+            <p>OpenVals now natively supports local models via <a href="https://ollama.com" class="link">Ollama</a>. This is ideal for private or air-gapped evaluations.</p>
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">python</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <pre><code class="language-python">from openvals.models.ollama_model import OllamaModel
+
+# Initialize with any model pulled in Ollama
+model = OllamaModel("llama3")
+
+# Use it in the same evaluator flow
+evaluator = Evaluator(model, dataset)
+result = evaluator.run()</code></pre>
+            </div>
+
+            <h2 id="next-steps">Next Steps</h2>
+            <div class="card-grid">
+                <a href="core-concepts.html" class="card">
+                    <div class="card-icon">📖</div>
+                    <h3 class="card-title">Core Concepts</h3>
+                    <p class="card-desc">Learn about the architecture and how Trust Scores are calculated.</p>
+                </a>
+                <a href="guides/custom-model.html" class="card">
+                    <div class="card-icon">🛠️</div>
+                    <h3 class="card-title">Custom Models</h3>
+                    <p class="card-desc">Connect your own LLM (OpenAI, Anthropic, etc.) to the framework.</p>
+                </a>
+            </div>
+
+            <footer class="page-footer">
+                <p>&copy; 2026 OpenVals Project</p>
+                <a href="#" class="edit-link">Edit this page on GitHub</a>
+            </footer>
+        </div>
+
+        <aside class="toc">
+            <div class="toc-title">On this page</div>
+            <div class="toc-list"></div>
+        </aside>
+    </main>
+
+    <div class="search-modal">
+        <div class="search-box">
+            <div class="search-input-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input type="text" class="search-input" placeholder="Search documentation...">
+            </div>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="js/search-index.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

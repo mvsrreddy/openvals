@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation API — OpenVals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <a href="../index.html" class="header-logo">
+            <img src="../assets/logo.svg" alt="OpenVals Logo">
+            <span>OpenVals</span>
+        </a>
+        <div class="header-actions">
+            <button class="header-search-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <span>Search docs...</span>
+                <kbd>/</kbd>
+            </button>
+            <a href="https://github.com/vishwanathakuthota/openvals" class="github-link" target="_blank">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
+                </svg>
+            </a>
+            <button class="theme-toggle" aria-label="Toggle theme"></button>
+            <button class="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="sidebar-overlay"></div>
+
+    <aside class="sidebar">
+        <nav>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Introduction <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="../index.html">Overview</a>
+                    <a href="../getting-started.html">Getting Started</a>
+                    <a href="../core-concepts.html">Core Concepts</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">API Reference <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="evaluator.html">Evaluator</a>
+                    <a href="models.html">Models</a>
+                    <a href="datasets.html">Datasets</a>
+                    <a href="metrics.html">Metrics</a>
+                    <a href="benchmarking.html">Benchmarking</a>
+                    <a href="scoring.html">Scoring</a>
+                    <a href="recommendation.html" class="active">Recommendation</a>
+                    <a href="reporting.html">Reporting</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Guides <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="../guides/custom-model.html">Custom Models</a>
+                    <a href="../guides/custom-metrics.html">Custom Metrics</a>
+                    <a href="../guides/cli.html">CLI Usage</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Resources <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="../examples.html">Examples</a>
+                    <a href="../roadmap.html">Roadmap</a>
+                </div>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <div class="content">
+            <nav class="breadcrumbs">
+                <a href="../index.html">API Reference</a>
+                <span class="sep">/</span>
+                <span>Recommendation</span>
+            </nav>
+
+            <h1>Recommendation Engine</h1>
+            <p class="subtitle">Analyzes benchmark results to suggest the best model based on use-case profiles.</p>
+
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">python</span>
+                </div>
+                <pre><code class="language-python">from openvals.recommendation.engine import RecommendationEngine</code></pre>
+            </div>
+
+            <h2 id="engine-class">RecommendationEngine Class</h2>
+            <div class="code-block-wrapper">
+                <pre><code class="language-python">class RecommendationEngine(results)</code></pre>
+            </div>
+
+            <h3>Parameters</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>results</code></td>
+                            <td><code>Dict</code></td>
+                            <td>The dictionary of results returned by <code>BenchmarkRunner.run()</code>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 id="methods">Methods</h2>
+
+            <h3><code>recommend(use_case="default")</code></h3>
+            <p>Generates a model recommendation based on a specific use-case profile.</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>use_case</code></td>
+                            <td><code>str</code></td>
+                            <td><code>"default"</code></td>
+                            <td>The profile to use. Options include <code>"accuracy"</code>, <code>"speed"</code>, <code>"balanced"</code>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p><strong>Returns:</strong> A dictionary containing:</p>
+            <ul>
+                <li><code>recommended_model</code>: The name of the top-ranked model.</li>
+                <li><code>score</code>: The recommendation score.</li>
+                <li><code>confidence</code>: A confidence score (Score × DRS).</li>
+                <li><code>reason</code>: A human-readable explanation for the choice.</li>
+                <li><code>tradeoffs</code>: Analysis of what is sacrificed vs alternatives.</li>
+                <li><code>risks</code>: List of potential flags (e.g., "High Latency").</li>
+            </ul>
+
+            <h2 id="example-usage">Example Usage</h2>
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">python</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <pre><code class="language-python">from openvals.recommendation.engine import RecommendationEngine
+
+# Initialize with benchmark results
+engine = RecommendationEngine(benchmark_results)
+
+# Get recommendation for high-accuracy needs
+rec = engine.recommend(use_case="accuracy")
+
+print(f"Recommended: {rec['recommended_model']}")
+print(f"Reason: {rec['reason']}")</code></pre>
+            </div>
+
+            <footer class="page-footer">
+                <p>&copy; 2026 OpenVals Project</p>
+                <a href="#" class="edit-link">Edit this page on GitHub</a>
+            </footer>
+        </div>
+
+        <aside class="toc">
+            <div class="toc-title">On this page</div>
+            <div class="toc-list"></div>
+        </aside>
+    </main>
+
+    <div class="search-modal">
+        <div class="search-box">
+            <div class="search-input-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input type="text" class="search-input" placeholder="Search documentation...">
+            </div>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/search-index.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+
+</html>

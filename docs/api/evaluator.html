@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluator API — OpenVals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <a href="../index.html" class="header-logo">
+            <img src="../assets/logo.svg" alt="OpenVals Logo">
+            <span>OpenVals</span>
+        </a>
+        <div class="header-actions">
+            <button class="header-search-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <span>Search docs...</span>
+                <kbd>/</kbd>
+            </button>
+            <a href="https://github.com/vishwanathakuthota/openvals" class="github-link" target="_blank">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
+                </svg>
+            </a>
+            <button class="theme-toggle" aria-label="Toggle theme"></button>
+            <button class="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="sidebar-overlay"></div>
+
+    <aside class="sidebar">
+        <nav>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Introduction <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="../index.html">Overview</a>
+                    <a href="../getting-started.html">Getting Started</a>
+                    <a href="../core-concepts.html">Core Concepts</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">API Reference <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="evaluator.html" class="active">Evaluator</a>
+                    <a href="models.html">Models</a>
+                    <a href="datasets.html">Datasets</a>
+                    <a href="metrics.html">Metrics</a>
+                    <a href="benchmarking.html">Benchmarking</a>
+                    <a href="scoring.html">Scoring</a>
+                    <a href="recommendation.html">Recommendation</a>
+                    <a href="reporting.html">Reporting</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Guides <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="../guides/custom-model.html">Custom Models</a>
+                    <a href="../guides/custom-metrics.html">Custom Metrics</a>
+                    <a href="../guides/cli.html">CLI Usage</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Resources <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="../examples.html">Examples</a>
+                    <a href="../roadmap.html">Roadmap</a>
+                </div>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <div class="content">
+            <nav class="breadcrumbs">
+                <a href="../index.html">API Reference</a>
+                <span class="sep">/</span>
+                <span>Evaluator</span>
+            </nav>
+
+            <h1>Evaluator</h1>
+            <p class="subtitle">The core class for running AI model evaluations against datasets.</p>
+
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">python</span>
+                </div>
+                <pre><code class="language-python">from openvals.core.evaluator import Evaluator</code></pre>
+            </div>
+
+            <h2 id="evaluator-class">Evaluator Class</h2>
+            <div class="code-block-wrapper">
+                <pre><code class="language-python">class Evaluator(model, dataset, weights=None, debug=False)</code></pre>
+            </div>
+
+            <h3>Parameters</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>model</code></td>
+                            <td><code>BaseModel</code></td>
+                            <td>Required</td>
+                            <td>An instance of a class that inherits from <code>BaseModel</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>dataset</code></td>
+                            <td><code>List[Dict]</code></td>
+                            <td>Required</td>
+                            <td>A list of samples containing <code>input</code> and <code>expected_output</code> keys.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>weights</code></td>
+                            <td><code>Dict[str, float]</code></td>
+                            <td>See description</td>
+                            <td>The weight assigned to each metric. Default: <code>accuracy: 0.35, semantic: 0.30, latency: 0.15, reliability: 0.10, safety: 0.10</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>debug</code></td>
+                            <td><code>bool</code></td>
+                            <td><code>False</code></td>
+                            <td>If <code>True</code>, prints detailed per-sample evaluation results to the console.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 id="methods">Methods</h2>
+
+            <h3><code>run()</code></h3>
+            <p>Executes the evaluation pipeline for the provided model and dataset.</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Returns</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Dict</code></td>
+                            <td>A dictionary containing:
+                                <ul>
+                                    <li><code>overall_score</code>: Weighted average score.</li>
+                                    <li><code>drs_score</code>: Dynamic Response Score.</li>
+                                    <li><code>metrics</code>: Averages for all metrics.</li>
+                                    <li><code>samples</code>: Detailed results per input.</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 id="example-usage">Example Usage</h2>
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">python</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <pre><code class="language-python">evaluator = Evaluator(
+    model=my_llm,
+    dataset=my_data,
+    weights={"accuracy": 0.8, "semantic": 0.2, "latency": 0.0}
+)
+
+results = evaluator.run()
+print(f"Score: {results['overall_score']}")</code></pre>
+            </div>
+
+            <footer class="page-footer">
+                <p>&copy; 2026 OpenVals Project</p>
+                <a href="#" class="edit-link">Edit this page on GitHub</a>
+            </footer>
+        </div>
+
+        <aside class="toc">
+            <div class="toc-title">On this page</div>
+            <div class="toc-list"></div>
+        </aside>
+    </main>
+
+    <div class="search-modal">
+        <div class="search-box">
+            <div class="search-input-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input type="text" class="search-input" placeholder="Search documentation...">
+            </div>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/search-index.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+
+</html>

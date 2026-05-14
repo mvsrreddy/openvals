@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Models Guide — OpenVals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <a href="../index.html" class="header-logo">
+            <img src="../assets/logo.svg" alt="OpenVals Logo">
+            <span>OpenVals</span>
+        </a>
+        <div class="header-actions">
+            <button class="header-search-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <span>Search docs...</span>
+                <kbd>/</kbd>
+            </button>
+            <a href="https://github.com/vishwanathakuthota/openvals" class="github-link" target="_blank">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
+                </svg>
+            </a>
+            <button class="theme-toggle" aria-label="Toggle theme"></button>
+            <button class="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="sidebar-overlay"></div>
+
+    <aside class="sidebar">
+        <nav>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Introduction <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="../index.html">Overview</a>
+                    <a href="../getting-started.html">Getting Started</a>
+                    <a href="../core-concepts.html">Core Concepts</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">API Reference <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="../api/evaluator.html">Evaluator</a>
+                    <a href="../api/models.html">Models</a>
+                    <a href="../api/datasets.html">Datasets</a>
+                    <a href="../api/metrics.html">Metrics</a>
+                    <a href="../api/benchmarking.html">Benchmarking</a>
+                    <a href="../api/scoring.html">Scoring</a>
+                    <a href="../api/recommendation.html">Recommendation</a>
+                    <a href="../api/reporting.html">Reporting</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Guides <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="custom-model.html" class="active">Custom Models</a>
+                    <a href="custom-metrics.html">Custom Metrics</a>
+                    <a href="cli.html">CLI Usage</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Resources <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="../examples.html">Examples</a>
+                    <a href="../roadmap.html">Roadmap</a>
+                </div>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <div class="content">
+            <nav class="breadcrumbs">
+                <a href="../index.html">Guides</a>
+                <span class="sep">/</span>
+                <span>Custom Models</span>
+            </nav>
+
+            <h1>Custom Models</h1>
+            <p class="subtitle">How to create model adapters for any AI system or LLM provider.</p>
+
+            <h2 id="overview">Overview</h2>
+            <p>OpenVals is model-agnostic. To evaluate a new model, you simply need to create a class that implements
+                the <code>BaseModel</code> interface. This class acts as a bridge between OpenVals and your model's API
+                (OpenAI, Anthropic, Ollama, etc.).</p>
+
+            <h2 id="step-by-step">Step-by-Step Implementation</h2>
+
+            <h3>1. Subclass BaseModel</h3>
+            <p>Import <code>BaseModel</code> and create your class.</p>
+            <div class="code-block-wrapper">
+                <pre><code class="language-python">from openvals.models.base import BaseModel
+
+class MyOpenAIModel(BaseModel):
+    def __init__(self, api_key):
+        self.api_key = api_key</code></pre>
+            </div>
+
+            <h3>2. Implement <code>generate()</code></h3>
+            <p>The <code>generate</code> method takes a prompt string and should return the model's response string.</p>
+            <div class="code-block-wrapper">
+                <pre><code class="language-python">    def generate(self, prompt: str) -> str:
+        # Code to call your model API
+        response = call_openai_api(prompt, self.api_key)
+        return response.text</code></pre>
+            </div>
+
+            <h2 id="full-example">Full Example: OpenAI Adapter</h2>
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">python</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <pre><code class="language-python">import openai
+from openvals.models.base import BaseModel
+
+class OpenAIModel(BaseModel):
+    def __init__(self, model_name="gpt-3.5-turbo"):
+        self.client = openai.OpenAI()
+        self.model_name = model_name
+
+    def generate(self, prompt: str) -> str:
+        completion = self.client.chat.completions.create(
+            model=self.model_name,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return completion.choices[0].message.content</code></pre>
+            </div>
+
+            <h2 id="usage">Using Your Custom Model</h2>
+            <p>Once implemented, you can pass an instance of your class directly to the <code>Evaluator</code>.</p>
+            <div class="code-block-wrapper">
+                <pre><code class="language-python">model = OpenAIModel(model_name="gpt-4")
+evaluator = Evaluator(model, dataset)
+results = evaluator.run()</code></pre>
+            </div>
+
+            <footer class="page-footer">
+                <p>&copy; 2026 OpenVals Project</p>
+                <a href="#" class="edit-link">Edit this page on GitHub</a>
+            </footer>
+        </div>
+
+        <aside class="toc">
+            <div class="toc-title">On this page</div>
+            <div class="toc-list"></div>
+        </aside>
+    </main>
+
+    <div class="search-modal">
+        <div class="search-box">
+            <div class="search-input-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input type="text" class="search-input" placeholder="Search documentation...">
+            </div>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/search-index.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+
+</html>

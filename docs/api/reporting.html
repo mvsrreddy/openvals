@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporting API — OpenVals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <a href="../index.html" class="header-logo">
+            <img src="../assets/logo.svg" alt="OpenVals Logo">
+            <span>OpenVals</span>
+        </a>
+        <div class="header-actions">
+            <button class="header-search-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <span>Search docs...</span>
+                <kbd>/</kbd>
+            </button>
+            <a href="https://github.com/vishwanathakuthota/openvals" class="github-link" target="_blank">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
+                </svg>
+            </a>
+            <button class="theme-toggle" aria-label="Toggle theme"></button>
+            <button class="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="sidebar-overlay"></div>
+
+    <aside class="sidebar">
+        <nav>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Introduction <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="../index.html">Overview</a>
+                    <a href="../getting-started.html">Getting Started</a>
+                    <a href="../core-concepts.html">Core Concepts</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">API Reference <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="evaluator.html">Evaluator</a>
+                    <a href="models.html">Models</a>
+                    <a href="datasets.html">Datasets</a>
+                    <a href="metrics.html">Metrics</a>
+                    <a href="benchmarking.html">Benchmarking</a>
+                    <a href="scoring.html">Scoring</a>
+                    <a href="recommendation.html">Recommendation</a>
+                    <a href="reporting.html" class="active">Reporting</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Guides <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="../guides/custom-model.html">Custom Models</a>
+                    <a href="../guides/custom-metrics.html">Custom Metrics</a>
+                    <a href="../guides/cli.html">CLI Usage</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Resources <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="../examples.html">Examples</a>
+                    <a href="../roadmap.html">Roadmap</a>
+                </div>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <div class="content">
+            <nav class="breadcrumbs">
+                <a href="../index.html">API Reference</a>
+                <span class="sep">/</span>
+                <span>Reporting</span>
+            </nav>
+
+            <h1>Reporting</h1>
+            <p class="subtitle">Generate visual reports and summaries of your model evaluations.</p>
+
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">python</span>
+                </div>
+                <pre><code class="language-python">from openvals.reporting.html_report import generate_html_report</code></pre>
+            </div>
+
+            <h2 id="generate-html-report"><code>generate_html_report()</code></h2>
+            <p>Creates a standalone HTML file containing a model leaderboard and recommendation summary.</p>
+            <div class="code-block-wrapper">
+                <pre><code class="language-python">def generate_html_report(results, recommendation, output_file="report.html")</code></pre>
+            </div>
+
+            <h3>Parameters</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>results</code></td>
+                            <td><code>Dict</code></td>
+                            <td>Required</td>
+                            <td>Benchmark results from <code>BenchmarkRunner</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>recommendation</code></td>
+                            <td><code>Dict</code></td>
+                            <td>Required</td>
+                            <td>Recommendation data from <code>RecommendationEngine</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>output_file</code></td>
+                            <td><code>str</code></td>
+                            <td><code>"report.html"</code></td>
+                            <td>The name of the file to save.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 id="example-usage">Example Usage</h2>
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">python</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <pre><code class="language-python">from openvals.reporting.html_report import generate_html_report
+
+# 1. Run benchmark
+results = runner.run()
+
+# 2. Get recommendation
+recommendation = engine.recommend()
+
+# 3. Generate report
+generate_html_report(results, recommendation, "my_report.html")</code></pre>
+            </div>
+
+            <footer class="page-footer">
+                <p>&copy; 2026 OpenVals Project</p>
+                <a href="#" class="edit-link">Edit this page on GitHub</a>
+            </footer>
+        </div>
+
+        <aside class="toc">
+            <div class="toc-title">On this page</div>
+            <div class="toc-list"></div>
+        </aside>
+    </main>
+
+    <div class="search-modal">
+        <div class="search-box">
+            <div class="search-input-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input type="text" class="search-input" placeholder="Search documentation...">
+            </div>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="../js/search-index.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+
+</html>

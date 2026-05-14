@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core Concepts — OpenVals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <a href="index.html" class="header-logo">
+            <img src="assets/logo.svg" alt="OpenVals Logo">
+            <span>OpenVals</span>
+        </a>
+        <div class="header-actions">
+            <button class="header-search-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <span>Search docs...</span>
+                <kbd>/</kbd>
+            </button>
+            <a href="https://github.com/vishwanathakuthota/openvals" class="github-link" target="_blank">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
+                </svg>
+            </a>
+            <button class="theme-toggle" aria-label="Toggle theme"></button>
+            <button class="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="sidebar-overlay"></div>
+
+    <aside class="sidebar">
+        <nav>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Introduction <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="index.html">Overview</a>
+                    <a href="getting-started.html">Getting Started</a>
+                    <a href="core-concepts.html" class="active">Core Concepts</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">API Reference <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="api/evaluator.html">Evaluator</a>
+                    <a href="api/models.html">Models</a>
+                    <a href="api/datasets.html">Datasets</a>
+                    <a href="api/metrics.html">Metrics</a>
+                    <a href="api/benchmarking.html">Benchmarking</a>
+                    <a href="api/scoring.html">Scoring</a>
+                    <a href="api/recommendation.html">Recommendation</a>
+                    <a href="api/reporting.html">Reporting</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Guides <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="guides/custom-model.html">Custom Models</a>
+                    <a href="guides/custom-metrics.html">Custom Metrics</a>
+                    <a href="guides/cli.html">CLI Usage</a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Resources <span class="chevron">▾</span></div>
+                <div class="sidebar-links">
+                    <a href="examples.html">Examples</a>
+                    <a href="roadmap.html">Roadmap</a>
+                </div>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <div class="content">
+            <nav class="breadcrumbs">
+                <a href="index.html">Introduction</a>
+                <span class="sep">/</span>
+                <span>Core Concepts</span>
+            </nav>
+
+            <h1>Core Concepts</h1>
+            <p class="subtitle">Understand the underlying architecture and methodology of OpenVals.</p>
+
+            <h2 id="architecture">Architecture</h2>
+            <p>OpenVals is built with modularity at its core. The framework separates the data, the model, the
+                measurement, and the final scoring into distinct layers.</p>
+
+            <div class="arch-diagram">
+                <div class="arch-box">
+                    <div class="arch-label">Dataset</div>
+                    <div class="arch-desc">Input / Expected</div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-box">
+                    <div class="arch-label">Model Adapter</div>
+                    <div class="arch-desc">LLM / SLM</div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-box">
+                    <div class="arch-label">Metrics</div>
+                    <div class="arch-desc">Accuracy / Semantic</div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-box">
+                    <div class="arch-label">Scoring</div>
+                    <div class="arch-desc">Trust Score</div>
+                </div>
+            </div>
+
+            <h2 id="trust-score">The Trust Score</h2>
+            <p>The <strong>Trust Score</strong> is a single numerical value representing the model's reliability for a specific use case. It is calculated by taking a weighted average of individual metrics.</p>
+
+            <div class="formula-block">
+                Trust Score = ∑ (weight<sub>i</sub> × metric<sub>i</sub>)
+            </div>
+
+            <p>OpenVals evaluates models across several dimensions:</p>
+            <ul>
+                <li><strong>Accuracy (35%):</strong> How often the model matches the expected output.</li>
+                <li><strong>Semantic Similarity (30%):</strong> Meaning-based comparison using vector embeddings.</li>
+                <li><strong>Latency (15%):</strong> Response speed (lower is better).</li>
+                <li><strong>Reliability (10%):</strong> Stability and structure of the output.</li>
+                <li><strong>Safety (10%):</strong> Detection of unsafe or harmful content.</li>
+            </ul>
+
+            <h2 id="drs">Dynamic Response Scoring (DRS)</h2>
+            <p>DRS is a secondary scoring layer that evaluates the "naturalness" and "fluidity" of a model's response. Unlike standard metrics that look for a specific answer, DRS looks at the statistical properties of the text generation itself.</p>
+
+            <h2 id="recommendation-engine">Recommendation Engine</h2>
+            <p>The <strong>Recommendation Engine</strong> uses the results from multi-model benchmarks to suggest the best model for your specific needs. It doesn't just look at the highest score; it performs a tradeoff analysis:</p>
+            <ul>
+                <li><strong>Profiles:</strong> Choose from profiles like <code>speed_optimized</code>, <code>accuracy_first</code>, or <code>balanced</code>.</li>
+                <li><strong>Risks:</strong> Identifies potential flags like "High Latency" or "Low Reliability".</li>
+                <li><strong>Explanations:</strong> Provides a natural language reason why a specific model was chosen.</li>
+            </ul>
+
+            <h2 id="benchmarking-flow">Benchmarking Flow</h2>
+            <p>Benchmarking in OpenVals follows a multi-step process to ensure fair comparisons between models:</p>
+            <ol>
+                <li><strong>Execution:</strong> Every model in the benchmark is run against the same dataset.</li>
+                <li><strong>Normalization:</strong> Scores are normalized using Min-Max scaling to ensure different
+                    metrics are comparable.</li>
+                <li><strong>Ranking:</strong> Models are ranked based on their total weighted normalized score.</li>
+            </ol>
+
+            <div class="alert alert-info">
+                <div class="alert-title">💡 Pro Tip</div>
+                <p>Normalization is crucial because a latency of 2.0s might be "bad" in one context but "good" compared
+                    to other models in the same benchmark.</p>
+            </div>
+
+            <h2 id="extensibility">Extensibility</h2>
+            <p>Everything in OpenVals is extensible. You can easily plug in:</p>
+            <ul>
+                <li><strong>Custom Models:</strong> By subclassing <code>BaseModel</code>.</li>
+                <li><strong>Custom Metrics:</strong> By defining a function that takes <code>output</code> and
+                    <code>expected</code>.</li>
+                <li><strong>Custom Normalization:</strong> By providing your own normalization logic.</li>
+            </ul>
+
+            <footer class="page-footer">
+                <p>&copy; 2026 OpenVals Project</p>
+                <a href="#" class="edit-link">Edit this page on GitHub</a>
+            </footer>
+        </div>
+
+        <aside class="toc">
+            <div class="toc-title">On this page</div>
+            <div class="toc-list"></div>
+        </aside>
+    </main>
+
+    <div class="search-modal">
+        <div class="search-box">
+            <div class="search-input-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input type="text" class="search-input" placeholder="Search documentation...">
+            </div>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="js/search-index.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
