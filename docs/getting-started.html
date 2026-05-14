@@ -148,8 +148,16 @@ pip install -e .</code></pre>
                 </div>
                 <pre><code>openvals run --dataset my_eval.json</code></pre>
             </div>
-            <p>This will use the <code>DummyModel</code> (which reverses input) to demonstrate the evaluation flow.
-                You'll see an output containing the overall trust score and metric averages.</p>
+
+            <h3>Multi-Model Benchmarking</h3>
+            <p>You can also compare multiple models and generate an HTML report in a single command:</p>
+            <div class="code-block-wrapper">
+                <div class="code-block-header">
+                    <span class="code-block-lang">bash</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <pre><code>openvals benchmark --dataset finance --models mistral,llama3 --config finance --output report.html</code></pre>
+            </div>
 
             <h2 id="running-via-python">Running via Python</h2>
             <p>For deeper integration, use the Python API. This allows you to use your own model adapters.</p>
