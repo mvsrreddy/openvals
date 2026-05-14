@@ -1,0 +1,24 @@
+{
+  "name": "Finance Advanced",
+  "domain": "finance",
+  "version": "1.0",
+  "description": "Advanced financial reasoning and safety evaluation dataset",
+  "difficulty": "medium",
+  "samples": 100,
+
+  "recommended_metrics": [
+    "accuracy",
+    "semantic",
+    "safety",
+    "reliability",
+    "latency"
+  ],
+
+  "recommended_weights": {
+    "accuracy": 0.30,
+    "semantic": 0.25,
+    "safety": 0.25,
+    "reliability": 0.10,
+    "latency": 0.10
+  }
+}

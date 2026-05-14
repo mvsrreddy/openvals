@@ -1,85 +1,148 @@
 from openvals.benchmarking.benchmark import BenchmarkRunner
 from openvals.benchmarking.normalization import normalize_scores
-from openvals.benchmarking.ranking import rank_models
-from openvals.datasets.loader import load_dataset
+from openvals.datasets.loader import load_builtin_dataset
+from openvals.datasets.metadata import load_dataset_metadata
+
 from openvals.models.ollama_model import OllamaModel
+
 from openvals.recommendation.engine import RecommendationEngine
 from openvals.reporting.html_report import generate_html_report
 
-# 📦 Load dataset
-dataset = load_dataset("examples/sample_eval.json")
 
-# 🤖 Models
+# =========================================================
+# LOAD DATASET + METADATA
+# =========================================================
+
+dataset_name = "finance"
+
+dataset = load_builtin_dataset(dataset_name)
+metadata = load_dataset_metadata(dataset_name)
+
+weights = metadata["recommended_weights"]
+
+print("\n=== DATASET METADATA ===\n")
+print(metadata)
+
+
+# =========================================================
+# LOAD MODELS
+# =========================================================
+
 models = {
     "llama2": OllamaModel("llama2"),
     "mistral": OllamaModel("mistral"),
     "llama3": OllamaModel("llama3")
 }
 
-# 🚀 Run benchmark
-runner = BenchmarkRunner(models, dataset, debug=False)
+
+# =========================================================
+# RUN BENCHMARK
+# =========================================================
+
+runner = BenchmarkRunner(
+    models=models,
+    dataset=dataset,
+    weights=weights,
+    debug=False
+)
+
 results = runner.run()
+
+
+# =========================================================
+# SANITY CHECK
+# =========================================================
 
 print("\n=== SANITY CHECK ===\n")
 
 for model, data in results.items():
+
     print(f"\nModel: {model}")
 
     if data is None:
         print("❌ ERROR: No data returned")
         continue
 
-    print("Metrics keys:", data.get("metrics", {}).keys())
-    print("DRS:", data.get("drs_score", "MISSING"))
+    print("Metrics Keys :", list(data.get("metrics", {}).keys()))
+    print("DRS Score    :", data.get("drs_score", "MISSING"))
 
-# 🔍 Normalize
+
+# =========================================================
+# NORMALIZATION
+# =========================================================
+
 normalized = normalize_scores(results)
 
-# 🏆 Ranking using DRS (PRIMARY)
+print("\n=== NORMALIZED ===\n")
+print(normalized)
+
+
+# =========================================================
+# DRS RANKING (PRIMARY)
+# =========================================================
+
 ranking = sorted(
-    [(m, results[m]["drs_score"]) for m in results],
+    [
+        (model_name, results[model_name]["drs_score"])
+        for model_name in results
+    ],
     key=lambda x: x[1],
     reverse=True
 )
-sorted_models = [m[0] for m in ranking]
 
-# 🧠 Sort models by ranking
-sorted_models = [m[0] for m in ranking]
 
-# 📊 FINAL TABLE
+# =========================================================
+# FINAL TABLE
+# =========================================================
+
 print("\n=== MODEL BENCHMARK (DRS Ranked) ===\n")
 
-print(f"{'Rank':<5} {'Model':<10} {'Acc':<6} {'Sem':<6} {'Rel':<6} {'Safe':<6} {'Cons':<6} {'Var':<6} {'Lat(ms)':<10} {'DRS':<6}")
+print(
+    f"{'Rank':<5} "
+    f"{'Model':<10} "
+    f"{'Acc':<8} "
+    f"{'Sem':<8} "
+    f"{'Rel':<8} "
+    f"{'Safe':<8} "
+    f"{'Cons':<8} "
+    f"{'Var':<8} "
+    f"{'Lat(ms)':<12} "
+    f"{'DRS':<8}"
+)
 
-for i, model_name in enumerate(sorted_models, 1):
-    m = results[model_name]["metrics"]
-    drs = results[model_name]["drs_score"]
+for rank, (model_name, drs_score) in enumerate(ranking, start=1):
+
+    metrics = results[model_name]["metrics"]
 
     print(
-        f"{i:<5} "
+        f"{rank:<5} "
         f"{model_name:<10} "
-        f"{m['accuracy']:<6.3f} "
-        f"{m['semantic']:<6.3f} "
-        f"{m['reliability']:<6.3f} "
-        f"{m['safety']:<6.3f} "
-        f"{m['consistency']:<6.3f} "
-        f"{m['variance']:<6.3f} "
-        f"{m['latency']:<10.2f} "
-        f"{drs:<6.3f}"
+        f"{metrics['accuracy']:<8.3f} "
+        f"{metrics['semantic']:<8.3f} "
+        f"{metrics['reliability']:<8.3f} "
+        f"{metrics['safety']:<8.3f} "
+        f"{metrics['consistency']:<8.3f} "
+        f"{metrics['variance']:<8.3f} "
+        f"{metrics['latency']:<12.2f} "
+        f"{drs_score:<8.3f}"
     )
 
-# 🧠 RECOMMENDATION ENGINE
+
+# =========================================================
+# RECOMMENDATION ENGINE
+# =========================================================
+
 engine = RecommendationEngine(results)
 
-recommendation = engine.recommend(use_case="defaul")
+recommendation = engine.recommend(
+    use_case=dataset_name
+)
 
-print("\n=== RECOMMENDATION ===\n")
-print(f"Best Model : {recommendation['recommended_model']}")
-print(f"Score      : {recommendation['score']}")
-print(f"DRS        : {recommendation['drs']}")
-print(f"Reason     : {recommendation['reason']}")
 
-#AI ADVISOR REPORT
+# =========================================================
+# AI ADVISOR REPORT
+# =========================================================
+
 print("\n=== AI ADVISOR REPORT ===\n")
 
 print(f"Recommended Model : {recommendation['recommended_model']}")
@@ -87,15 +150,26 @@ print(f"Score             : {recommendation['score']}")
 print(f"DRS               : {recommendation['drs']}")
 print(f"Confidence        : {recommendation['confidence']}")
 
-print(f"\nWhy:")
+print("\nWhy:")
 print(f"→ {recommendation['reason']}")
 
-print(f"\nTrade-offs:")
+print("\nTrade-offs:")
 print(f"→ {recommendation['tradeoffs']}")
 
-print(f"\nRisks:")
-for r in recommendation["risks"]:
-    print(f"→ {r}")
+print("\nRisks:")
 
-# 🧠 Generate HTML report
-generate_html_report(results, recommendation, output_file="report.html")
+for risk in recommendation["risks"]:
+    print(f"→ {risk}")
+
+
+# =========================================================
+# GENERATE HTML REPORT
+# =========================================================
+
+generate_html_report(
+    results,
+    recommendation,
+    output_file="report.html"
+)
+
+print("\n✅ HTML report generated: report.html")

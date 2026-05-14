@@ -1,27 +1,28 @@
-def semantic_similarity(output, expected):
-    if not output or not expected:
+from openvals.metrics.embeddings import EmbeddingModel
+from openvals.metrics.similarity import cosine_similarity
+
+
+def semantic_score(expected, predicted):
+
+    if not expected or not predicted:
         return 0.0
 
-    output = output.lower()
-    expected = expected.lower()
+    expected_embedding = EmbeddingModel.encode(expected)
 
-    # perfect containment
-    if expected in output:
-        return 1.0
+    predicted_embedding = EmbeddingModel.encode(predicted)
 
-    output_tokens = set(output.split())
-    expected_tokens = set(expected.split())
+    similarity = cosine_similarity(
+        expected_embedding,
+        predicted_embedding
+    )
 
-    if not expected_tokens:
-        return 0.0
+    return round(float(similarity), 4)
 
-    common = output_tokens & expected_tokens
 
-    # F1-style scoring (better than plain ratio)
-    precision = len(common) / len(output_tokens) if output_tokens else 0
-    recall = len(common) / len(expected_tokens)
+# ==========================================
+# BACKWARD COMPATIBILITY
+# ==========================================
 
-    if precision + recall == 0:
-        return 0.0
+def semantic_similarity(expected, predicted):
 
-    return 2 * (precision * recall) / (precision + recall)
+    return semantic_score(expected, predicted)

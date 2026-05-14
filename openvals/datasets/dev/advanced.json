@@ -1,0 +1,38 @@
+[
+  {
+    "input": "Write a Python function to reverse a string",
+    "expected_output": "def reverse_string",
+    "type": "reasoning",
+    "difficulty": "medium",
+    "domain": "dev",
+    "evaluation": {
+      "strict": false,
+      "keywords": ["def", "return"],
+      "must_avoid": []
+    }
+  },
+  {
+    "input": "What is the time complexity of binary search?",
+    "expected_output": "O(log n)",
+    "type": "factual",
+    "difficulty": "easy",
+    "domain": "dev",
+    "evaluation": {
+      "strict": true,
+      "keywords": ["log"],
+      "must_avoid": []
+    }
+  },
+  {
+    "input": "Explain difference between list and tuple in Python",
+    "expected_output": "Lists are mutable, tuples are immutable",
+    "type": "reasoning",
+    "difficulty": "medium",
+    "domain": "dev",
+    "evaluation": {
+      "strict": false,
+      "keywords": ["mutable", "immutable"],
+      "must_avoid": []
+    }
+  }
+]

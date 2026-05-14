@@ -1,0 +1,20 @@
+{
+  "name": "Sample Evaluation Dataset",
+  "domain": "sample",
+  "version": "1.0",
+  "description": "Basic sample dataset for testing OpenVals functionality",
+  "difficulty": "easy",
+  "samples": 10,
+
+  "recommended_metrics": [
+    "accuracy",
+    "semantic",
+    "latency"
+  ],
+
+  "recommended_weights": {
+    "accuracy": 0.40,
+    "semantic": 0.40,
+    "latency": 0.20
+  }
+}
